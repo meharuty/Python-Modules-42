@@ -74,9 +74,6 @@ and {self.diameter}cm wide.")
         super().show()
         print(f"Trunk diameter: {self.diameter}cm")
 
-    def status(self) -> None:
-        print(f"{self.stat.shade} shade")
-
 
 class Vegetable(Plant):
     def __init__(
@@ -121,6 +118,8 @@ def stats(plant: Plant) -> None:
         f"Stats: {plant.stat.grow} grow, "
         f"{plant.stat.age} age, {plant.stat.show} show"
         )
+    if plant.__class__ == Tree:
+        print(f"{plant.stat.shade} shade")
 
 
 if __name__ == "__main__":
@@ -147,12 +146,10 @@ if __name__ == "__main__":
     tree1.show()
     print("[statistics for Oak]")
     stats(tree1)
-    tree1.status()
     print("[asking the oak to produce shade]")
     tree1.produce_shade()
     print("[statistics for Oak]")
     stats(tree1)
-    tree1.status()
     print()
 
     print("=== Seed")
