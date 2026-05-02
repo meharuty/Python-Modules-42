@@ -1,10 +1,10 @@
 class Plant:
-    def __init__(self, name, height: float, age):
+    def __init__(self, name: str, height: float, age: int) -> None:
         self.name = name
-        self.height = float(height)
+        self.height = height
         self.age_ = age
 
-    def show(self):
+    def show(self) -> None:
         print(f"Created: {self.name}: {self.height}cm, {self.age_} days old")
 
 
@@ -14,7 +14,7 @@ if __name__ == "__main__":
     plant_3 = Plant("Cactus", 5, 90)
     plant_4 = Plant("Sunflower", 80, 45)
     plant_5 = Plant("Fern", 15, 120)
-    print("=== Garden Factory Output ===")
+    print("=== Plant Factory Output ===")
     plant_1.show()
     plant_2.show()
     plant_3.show()

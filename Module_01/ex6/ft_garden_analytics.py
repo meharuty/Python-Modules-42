@@ -1,9 +1,12 @@
-def stats(a1, a2, a3):
+from typing_extensions import Self
+
+
+def stats(a1: int, a2: int, a3: int) -> None:
     print(f"Stats: {a1} grow, {a2} age, {a3} show")
 
 
 class Plant:
-    def __init__(self, name, height, age):
+    def __init__(self, name: str, height: float, age: int) -> None:
         self.name = name
         self.height = float(height)
         self.age_ = age
@@ -12,22 +15,22 @@ class Plant:
         self.stat3 = 0
 
     @classmethod
-    def anonimous(cls):
+    def anonimous(cls: type[Self]) -> Self:
         name = "Unknown plant"
         height = 0
         age = 0
         return cls(name, height, age)
 
-    def grow(self, amount):
+    def grow(self, amount: float) -> None:
         self.height += amount
         self.stat1 += 1
 
-    def age(self, days):
+    def age(self, days: int) -> None:
         self.age_ += days
         self.stat2 += 1
 
     @staticmethod
-    def age_check(days):
+    def age_check(days: int) -> bool:
         if (days > 365):
             print(f"Is {days} days more than a year? -> True")
             return True
@@ -35,24 +38,24 @@ class Plant:
             print(f"Is {days} days more than a year? -> False")
             return False
 
-    def show(self):
+    def show(self) -> None:
         print(f"{self.name}: {self.height}cm, {self.age_} days old")
         self.stat3 += 1
 
-    def status(self):
+    def status(self) -> None:
         stats(self.stat1, self.stat2, self.stat3)
 
 
 class Flower(Plant):
-    def __init__(self, name, height, age, color):
+    def __init__(self, name: str, height: float, age: int, color: str) -> None:
         super().__init__(name, height, age)
         self.color = color
         self.is_blooming = False
 
-    def bloom(self):
+    def bloom(self) -> None:
         self.is_blooming = True
 
-    def show(self):
+    def show(self) -> None:
         super().show()
         print(f"Color: {self.color}")
         if self.is_blooming:
@@ -60,67 +63,74 @@ class Flower(Plant):
         else:
             print(f"{self.name} has not bloomed yet")
 
-    def status(self):
+    def status(self) -> None:
         super().status()
 
 
 class Tree(Plant):
-    def __init__(self, name, height, age, trunk_diameter):
+    def __init__(
+            self, name: str, height: float,
+            age: int, trunk_diameter: float
+            ) -> None:
         super().__init__(name, height, age)
         self.diameter = float(trunk_diameter)
         self.stat4 = 0
 
-    def produce_shade(self):
+    def produce_shade(self) -> None:
         print(f"Tree {self.name} now produces a shade of {self.height}cm long \
 and {self.diameter}cm wide.")
         self.stat4 += 1
 
-    def show(self):
+    def show(self) -> None:
         super().show()
         print(f"Trunk diameter: {self.diameter}cm")
 
-    def status(self):
+    def status(self) -> None:
         super().status()
         print(f"{self.stat4} shade")
 
 
 class Vegetable(Plant):
-    def __init__(self, name, height, age, harvest_season):
+    def __init__(
+            self, name: str, height: float,
+            age: int, harvest_season: str
+            ) -> None:
         super().__init__(name, height, age)
         self.season = harvest_season
         self.nutritional_value = 0
 
-    def grow(self, amount):
+    def grow(self, amount: float) -> None:
         super().grow(amount)
         self.nutritional_value += 1
 
-    def age(self, days):
+    def age(self, days: int) -> None:
         super().age(days)
         self.nutritional_value += days
 
-    def show(self):
+    def show(self) -> None:
         super().show()
         print(f"Harvest season: {self.season}")
         print(f"Nutritional value: {self.nutritional_value}")
 
-    def status(self):
+    def status(self) -> None:
         super().status()
 
 
 class Seed(Flower):
-    def __init__(self, name, height, age, color):
+    def __init__(self, name: str, height: float,
+                 age: int, color: str) -> None:
         super().__init__(name, height, age, color)
         self.seeds = 0
 
-    def bloom(self):
+    def bloom(self) -> None:
         super().bloom()
         self.seeds += 42
 
-    def show(self):
+    def show(self) -> None:
         super().show()
         print(f"Seeds: {self.seeds}")
 
-    def status(self):
+    def status(self) -> None:
         super().status()
 
 
