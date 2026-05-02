@@ -1,33 +1,30 @@
-from typing_extensions import Self
-
-
-def stats(a1: int, a2: int, a3: int) -> None:
-    print(f"Stats: {a1} grow, {a2} age, {a3} show")
-
-
 class Plant:
+    class Stats:
+        def __init__(self) -> None:
+            self.grow = 0
+            self.age = 0
+            self.show = 0
+
     def __init__(self, name: str, height: float, age: int) -> None:
         self.name = name
         self.height = float(height)
         self.age_ = age
-        self.stat1 = 0
-        self.stat2 = 0
-        self.stat3 = 0
+        self.stat = Plant.Stats()
 
     @classmethod
-    def anonimous(cls: type[Self]) -> Self:
+    def anonymous(cls) -> "Plant":
         name = "Unknown plant"
-        height = 0
+        height = 0.0
         age = 0
         return cls(name, height, age)
 
     def grow(self, amount: float) -> None:
         self.height += amount
-        self.stat1 += 1
+        self.stat.grow += 1
 
     def age(self, days: int) -> None:
         self.age_ += days
-        self.stat2 += 1
+        self.stat.age += 1
 
     @staticmethod
     def age_check(days: int) -> bool:
@@ -40,10 +37,10 @@ class Plant:
 
     def show(self) -> None:
         print(f"{self.name}: {self.height}cm, {self.age_} days old")
-        self.stat3 += 1
+        self.stat.show += 1
 
     def status(self) -> None:
-        stats(self.stat1, self.stat2, self.stat3)
+        stats(self)
 
 
 class Flower(Plant):
@@ -134,6 +131,13 @@ class Seed(Flower):
         super().status()
 
 
+def stats(plant: Plant) -> None:
+    print(
+        f"Stats: {plant.stat.grow} grow,"
+        f"{plant.stat.age} age, {plant.stat.show} show"
+        )
+
+
 if __name__ == "__main__":
     print("=== Garden statistics ===")
     print("=== Check year-old")
@@ -170,6 +174,6 @@ if __name__ == "__main__":
     print()
 
     print("=== Anonymous")
-    anonim = Plant.anonimous()
+    anonim = Plant.anonymous()
     anonim.show()
     anonim.status()
