@@ -1,10 +1,10 @@
-def input_temperature(temp_str:str) -> int:
-    temp_str = int(temp_str)
-    if(temp_str > 40):
-        raise ValueError(f"{temp_str}°C is too hot for plants (max 40°C)")
-    elif (temp_str < 0):
-        raise ValueError(f"{temp_str}°C is too cold for plants (min 0°C)")
-    return (temp_str)
+def input_temperature(temp_str: str) -> int:
+    temp = int(temp_str)
+    if (temp > 40):
+        raise ValueError(f"{temp}°C is too hot for plants (max 40°C)")
+    elif (temp < 0):
+        raise ValueError(f"{temp}°C is too cold for plants (min 0°C)")
+    return (temp)
 
 
 def test_temperature() -> None:
@@ -15,7 +15,9 @@ def test_temperature() -> None:
         print("Input data is 'abc'")
         input_temperature('abc')
     except ValueError:
-        print("Caught input_temperature error: invalid literal for int() with base 10: 'abc'")
+        print(
+            "Caught input_temperature error: "
+            "invalid literal for int() with base 10: 'abc'")
     print()
     try:
         print("Input data is '100'")
@@ -28,8 +30,9 @@ def test_temperature() -> None:
     except ValueError as e:
         print(f"Caught input_temperature error: {e}")
 
+
 if __name__ == "__main__":
-    print("=== Garden Temperature ===")
+    print("=== Garden Temperature Checker ===")
     print()
     test_temperature()
     print()

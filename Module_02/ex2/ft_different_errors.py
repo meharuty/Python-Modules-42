@@ -1,33 +1,39 @@
-def garden_operations(operation_number: int) -> str:
+def garden_operations(operation_number: int) -> None:
     if (operation_number == 0):
         int('abc')
-    elif(operation_number == 1):
-        x = 6 / 0
+    elif (operation_number == 1):
+        6 / 0
     elif (operation_number == 2):
         f = open("no.txt", "r")
         f.read()
-        f.close()
-    elif(operation_number == 3):
-        "mel" + 5
-    else:
-        return "Operation completed successfully"
+    elif (operation_number == 3):
+        "mel" + 5   # type: ignore
 
 
-def test_error_types():
-    for i in range (5):
+def test_error_types() -> None:
+    try:
+        garden_operations(0)
+    except (ValueError, TypeError) as e:
+        print(f"Caught ValueError: {e}")
+    for i in (1, 2, 3, 4):
         try:
             print(f"\nTesting operation {i}...")
-            result = garden_operations(i)
-            if result:
-                print(result)
-        except ValueError:
-            print("Caught ValueError: invalid literal for int() with base 10: 'abc'")
-        except ZeroDivisionError:
-            print("Caught ZeroDivisionError: division by zero")
-        except FileNotFoundError:
-            print("Caught FileNotFoundError: [Errno 2] No such file or directory: '/non/existent/file'")
-        except TypeError:
-            print('Caught TypeError: can only concatenate str (not "int") to str')
+            garden_operations(i)
+            print("Operation completed successfully")
+        except ValueError as e:
+            print(
+                f"Caught ValueError: {e}"
+                )
+        except ZeroDivisionError as e:
+            print(f"Caught ZeroDivisionError: {e}")
+        except FileNotFoundError as e:
+            print(
+                f"Caught FileNotFoundError: {e}"
+                )
+        except TypeError as e:
+            print(
+                f"Caught TypeError: {e}"
+                )
 
 
 if __name__ == "__main__":
