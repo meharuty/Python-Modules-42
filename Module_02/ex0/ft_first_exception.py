@@ -9,11 +9,8 @@ def test_temperature() -> None:
     try:
         print("Input data is 'abc'")
         input_temperature('abc')
-    except ValueError:
-        print(
-            "Caught input_temperature error: "
-            "invalid literal for int() with base 10: 'abc'"
-            )
+    except ValueError as e:
+        print(f"Caught input_temperature error: {e}")
 
 
 if __name__ == "__main__":
