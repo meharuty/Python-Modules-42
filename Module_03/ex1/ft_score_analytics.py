@@ -1,7 +1,7 @@
 import sys
 
 
-def main():
+def main() -> None:
     print("=== Player Score Analytics ===")
     if (len(sys.argv) == 1):
         print(
