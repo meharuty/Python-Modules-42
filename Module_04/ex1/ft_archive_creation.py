@@ -40,8 +40,8 @@ user_input = input("Enter new file name (or empty):")
 if user_input == "":
     print("Not saving data.")
 else:
-    f = open(user_input)
-    f.write(new_cont)
-    f.close()
+    m = open(user_input, "w")
+    m.write(new_cont)
+    m.close()
     print(f"Saving data to '{user_input}'")
     print(f"Data saved in '{user_input}'.")
