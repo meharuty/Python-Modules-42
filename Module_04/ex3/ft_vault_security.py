@@ -1,5 +1,5 @@
 def secure_archive(filename: str, mode: str = "read",
-                   content: str = "") -> tuple:
+                   content: str = "") -> tuple[bool, str]:
     try:
         if mode == "read":
             with open(filename) as f:
@@ -21,20 +21,21 @@ def secure_archive(filename: str, mode: str = "read",
         return (True, "Content successfully written to file")
 
 
-print("=== Cyber Archives Security ===\n")
-print("Using 'secure_archive' to read from a nonexistent file:")
-tp = secure_archive("c.txt", 'read')
-print(tp)
-print()
-print("Using 'secure_archive' to read from an inaccessible file:")
-tp = secure_archive("b.txt", "read")
-print(tp)
-print()
-print("Using 'secure_archive' to read from a regular file:")
-tp = secure_archive("a.txt", "read")
-print(tp)
-print()
+if __name__ == "__main__":
+    print("=== Cyber Archives Security ===\n")
+    print("Using 'secure_archive' to read from a nonexistent file:")
+    tp = secure_archive("c.txt", 'read')
+    print(tp)
+    print()
+    print("Using 'secure_archive' to read from an inaccessible file:")
+    tp = secure_archive("b.txt", "read")
+    print(tp)
+    print()
+    print("Using 'secure_archive' to read from a regular file:")
+    tp = secure_archive("a.txt", "read")
+    print(tp)
+    print()
 
-print("Using 'secure_archive' to write previous content to a new file:")
-tp = secure_archive("a.txt", "write", "Melin")
-print(tp)
+    print("Using 'secure_archive' to write previous content to a new file:")
+    tp = secure_archive("a.txt", "write", "Melin")
+    print(tp)
