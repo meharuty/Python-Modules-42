@@ -1,7 +1,7 @@
 import random
 
 
-def gen_player_achievements() -> set:
+def gen_player_achievements() -> set[str]:
     achievements = [
                     'Crafting Genius', 'Strategist', 'World Savior',
                     'Speed Runner', 'Survivor', 'Master Explorer',
