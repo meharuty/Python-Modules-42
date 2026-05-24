@@ -1,17 +1,25 @@
 def get_player_pos() -> tuple:
     user_input = input()
     tp1 = tuple(user_input.split(','))
-    """if (len(tp1) != 3):
+    len = 0
+    for i in tp1:
+        len += 1
+    if (len != 3):
         print("Enter coordinates as floats in format 'x,y,z':", user_input)
         print("Invalid syntax")
-        return (get_player_pos())"""
+        return (get_player_pos())
     tp = ()
     for x in tp1:
         try:
             tp += (float(x),)   # type: ignore
         except ValueError:
-            print("Enter coordinates as floats in format 'x,y,z':", user_input)
-            print("Invalid syntax")
+            print(
+                "Enter new coordinates as floats in format 'x,y,z':",
+                user_input
+                )
+            print(
+                "Error on parameter 'abc': "
+                f"could not convert string to float: {x}")
             return (get_player_pos())
     return tp
 
