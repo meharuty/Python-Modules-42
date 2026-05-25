@@ -17,30 +17,36 @@ def minimum(dc: list[int]) -> int:
     return min
 
 
+def gain_input(argv: str) -> dict:
+    dc = {}
+    if (len(sys.argv) > 1):
+        for x in sys.argv[1:]:
+            if ":" in x:
+                item, qty = x.split(":")
+
+                try:
+                    qty = int(qty)  # type: ignore
+                except ValueError as e:
+                    print(f"Quantity error for 'key': {e}")
+                    continue
+
+                if item in dc:
+                    print(f"Redundant item {item} - discarding")
+                    continue
+
+                dc[item] = int(qty)
+            else:
+                print(f"Error - invalid parameter '{x}'")
+        return dc
+
+
 print("=== Inventory System Analysis ===")
-dc = {}
-if (len(sys.argv) > 1):
-    for x in sys.argv[1:]:
-        if ":" not in x:
-            print(f"Error - invalid parameter {x}")
-            continue
 
-        item, qty = x.split(":")
+dc = gain_input(sys.argv)
 
-        try:
-            qty = int(qty)  # type: ignore
-        except ValueError as e:
-            print(f"Quantity error for 'key': {e}")
-            continue
+print("Got inventory:", dc)
 
-        if item in dc:
-            print(f"Redundant item {item} - discarding")
-            continue
-
-        dc[item] = int(qty)
-
-    print("Got inventory:", dc)
-
+if (len(dc) > 0):
     sum = 0.0
     quantity = 0
 
