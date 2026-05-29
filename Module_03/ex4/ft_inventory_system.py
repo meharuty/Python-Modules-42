@@ -2,7 +2,7 @@ import sys
 
 
 def maximum(dc: list[int]) -> int:
-    max = 0
+    max = dc[0]
     for item in dc:
         if (item > max):
             max = item
@@ -17,27 +17,26 @@ def minimum(dc: list[int]) -> int:
     return min
 
 
-def gain_input(argv: str) -> dict:
+def gain_input(argv: list[str]) -> dict[str, int]:
     dc = {}
-    if (len(sys.argv) > 1):
-        for x in sys.argv[1:]:
-            if ":" in x:
-                item, qty = x.split(":")
+    for x in argv[1:]:
+        if ":" not in x:
+            print(f"Error - invalid parameter '{x}'")
+            continue
 
-                try:
-                    qty = int(qty)  # type: ignore
-                except ValueError as e:
-                    print(f"Quantity error for 'key': {e}")
-                    continue
+        item, qty = x.split(":")
+        try:
+            qty = int(qty)  # type: ignore
+        except ValueError as e:
+            print(f"Quantity error for 'key': {e}")
+            continue
 
-                if item in dc:
-                    print(f"Redundant item {item} - discarding")
-                    continue
+        if item in dc:
+            print(f"Redundant item {item} - discarding")
+            continue
 
-                dc[item] = int(qty)
-            else:
-                print(f"Error - invalid parameter '{x}'")
-        return dc
+        dc[item] = int(qty)
+    return dc
 
 
 print("=== Inventory System Analysis ===")

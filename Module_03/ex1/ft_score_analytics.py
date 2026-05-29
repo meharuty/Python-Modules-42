@@ -16,7 +16,7 @@ def main() -> None:
         try:
             args_list += [int(x)]
         except ValueError:
-            print("Invalid parameter:", x)
+            print(f"Invalid parameter: '{x}'")
     if (len(args_list) == 0):
         print(
             "No scores provided. "
