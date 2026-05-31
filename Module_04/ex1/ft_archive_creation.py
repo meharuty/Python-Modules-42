@@ -2,7 +2,7 @@ import sys
 
 
 if len(sys.argv) != 2:
-    print("Usage: python ft_ancient_text.py <file>")
+    print("Usage: ft_ancient_text.py <file>")
 else:
     filename = sys.argv[1]
 
