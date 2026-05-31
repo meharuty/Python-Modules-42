@@ -28,7 +28,7 @@ if __name__ == "__main__":
     print(tp)
     print()
     print("Using 'secure_archive' to read from an inaccessible file:")
-    tp = secure_archive("b.txt", "read")
+    tp = secure_archive("mn", "read")
     print(tp)
     print()
     print("Using 'secure_archive' to read from a regular file:")

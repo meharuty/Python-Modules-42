@@ -9,11 +9,14 @@ else:
     print("=== Cyber Archives Recovery ===")
     print(f"Accessing file '{filename}'")
 
-    f = open(filename)
-
-    print("---\n")
-    print(f.read())
-    print("\n---")
-
-    f.close()
-    print(f"File '{filename}' closed.")
+    try:
+        f = open(filename)
+        print("---\n")
+        print(f.read())
+        print("\n---")
+        f.close()
+        print(f"File '{filename}' closed.")
+    except FileNotFoundError as e:
+        print(f"Error opening file '{filename}': {e}")
+    except PermissionError as e:
+        print(f"Error opening file '{filename}': {e}")
