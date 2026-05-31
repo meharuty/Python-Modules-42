@@ -37,16 +37,14 @@ class NumericProcessor(DataProcessor):
     def ingest(self, data: Any) -> None:
         if not self.validate(data):
             raise TypeError("Improper numeric data")
-        for item in data:
-            self.storage.append((self.rank, item))
-            self.rank += 1
+        if isinstance(data, list):
+            for item in data:
+                self.storage.append((self.rank, str(item)))
+                self.rank += 1
 
         else:
             self.storage.append((self.rank, str(data)))
             self.rank += 1
-
-    def output(self) -> tuple:
-        return super().output()
 
 
 class TextProcessor(DataProcessor):
@@ -65,16 +63,14 @@ class TextProcessor(DataProcessor):
     def ingest(self, data: Any) -> None:
         if not self.validate(data):
             raise TypeError("Improper data")
-        for item in data:
-            self.storage.append((self.rank, item))
-            self.rank += 1
+        if isinstance(data, list):
+            for item in data:
+                self.storage.append((self.rank, item))
+                self.rank += 1
 
         else:
             self.storage.append((self.rank, str(data)))
             self.rank += 1
-
-    def output(self) -> tuple:
-        return super().output()
 
 
 class LogProcessor(DataProcessor):
@@ -104,9 +100,6 @@ class LogProcessor(DataProcessor):
         else:
             self.storage.append((self.rank, data))
             self.rank += 1
-
-    def output(self) -> tuple:
-        return super().output()
 
 
 if __name__ == "__main__":
@@ -157,4 +150,4 @@ if __name__ == "__main__":
     c.ingest(lst)
     for i in range(2):
         rank, value = c.output()
-        print(f"Log entry {rank}: {value}")
+        print(f"Log entry {i}: {value}")
