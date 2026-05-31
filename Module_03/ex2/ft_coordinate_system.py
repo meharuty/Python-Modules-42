@@ -10,20 +10,23 @@ def get_player_pos() -> tuple[float, float, float]:
         return (get_player_pos())
     for x in tp1:
         try:
-            tp = tp = (
-                float(tp1[0]),
-                float(tp1[1]),
-                float(tp1[2]),
-            )
+            float(x)
         except ValueError:
             print(
                 "Enter new coordinates as floats in format 'x,y,z':",
                 user_input
-                )
+            )
             print(
                 f"Error on parameter '{x}': "
-                f"could not convert string to float: '{x}'")
-            return (get_player_pos())
+                f"could not convert string to float"
+            )
+            return get_player_pos()
+
+    tp = (
+        float(tp1[0]),
+        float(tp1[1]),
+        float(tp1[2]),
+    )
     return tp
 
 
