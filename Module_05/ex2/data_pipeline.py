@@ -35,12 +35,15 @@ class NumericProcessor(DataProcessor):
 
         return False
 
-    def ingest(self, data: Any) -> None:
+    def ingest(
+            self,
+            data: int | float | list[int | float]
+            ) -> None:
         if not self.validate(data):
             raise TypeError("Improper numeric data")
         if isinstance(data, list):
             for item in data:
-                self.storage.append((self.rank, item))
+                self.storage.append((self.rank, str(item)))
                 self.rank += 1
                 self.total_processed += 1
 
@@ -48,9 +51,6 @@ class NumericProcessor(DataProcessor):
             self.storage.append((self.rank, str(data)))
             self.rank += 1
             self.total_processed += 1
-
-    def output(self) -> tuple:
-        return super().output()
 
 
 class TextProcessor(DataProcessor):
@@ -66,7 +66,10 @@ class TextProcessor(DataProcessor):
 
         return False
 
-    def ingest(self, data: Any) -> None:
+    def ingest(
+            self,
+            data: str | list[str]
+            ) -> None:
         if not self.validate(data):
             raise TypeError("Improper data")
         if (isinstance(data, list)):
@@ -79,9 +82,6 @@ class TextProcessor(DataProcessor):
             self.storage.append((self.rank, str(data)))
             self.rank += 1
             self.total_processed += 1
-
-    def output(self) -> tuple:
-        return super().output()
 
 
 class LogProcessor(DataProcessor):
@@ -100,52 +100,60 @@ class LogProcessor(DataProcessor):
 
         return False
 
-    def ingest(self, data: Any) -> None:
+    def ingest(
+            self,
+            data: dict[str, str] | list[dict[str, str]]
+            ) -> None:
         if not self.validate(data):
             raise TypeError("Improper data")
         if isinstance(data, list):
             for item in data:
-                self.storage.append((self.rank, item))
+                formatted = (
+                    f"{item['log_level']}: "
+                    f"{item['log_message']}"
+                    )
+                self.storage.append((self.rank, formatted))
                 self.rank += 1
                 self.total_processed += 1
 
         else:
-            self.storage.append((self.rank, data))
+            formatted = (
+                f"{data['log_level']}: "
+                f"{data['log_message']}"
+                )
+            self.storage.append((self.rank, formatted))
             self.rank += 1
-
-    def output(self) -> tuple:
-        return super().output()
+            self.total_processed += 1
 
 
 class ExportPlugin(Protocol):
-    def process_output(self, data: list[str]) -> None:
+    def process_output(self, data: list[tuple[int, str]]) -> None:
         pass
 
 
 class CSVExportPlugin:
     def process_output(
         self,
-        data: list[str]
+        data: list[tuple[int, str]]
     ) -> None:
 
+        values = [value for _, value in data]
+
         print("CSV Output:")
-        print(",".join(data))
+        print(",".join(values))
 
 
 class JSONExportPlugin:
-    def process_output(self, data: list[str]) -> None:
-        print("JSON Output:")
-        json_str = "{"
-        start_index = 3
+    def process_output(self, data: list[tuple[int, str]]) -> None:
+        items = []
 
-        for i, value in enumerate(data):
-            key = f'"item_{start_index + i}"'
-            val = f'"{value}"'
-            json_str += f"{key}: {val}"
-            if i != len(data) - 1:
-                json_str += ", "
-        json_str += "}"
-        print(json_str)
+        for rank, value in data:
+            items.append(f'"item_{rank}": "{value}"')
+
+        json_output = "{" + ", ".join(items) + "}"
+
+        print("JSON Output:")
+        print(json_output)
 
 
 class DataStream:
@@ -183,20 +191,12 @@ class DataStream:
             print("No processor found, no data")
 
     def output_pipeline(self, nb: int, plugin: ExportPlugin) -> None:
+
         for proc in self.processors:
-            exported_data: list[str] = []
+            exported_data: list[tuple[int, str]] = []
             count = 0
             while proc.storage and count < nb:
-                rank, value = proc.output()
-                if isinstance(value, dict):
-                    formatted = (
-                        f"{value['log_level']}: "
-                        f"{value['log_message']}"
-                    )
-                    exported_data.append(formatted)
-
-                else:
-                    exported_data.append(str(value))
+                exported_data.append(proc.output())
                 count += 1
 
             if exported_data:
@@ -252,6 +252,9 @@ if __name__ == "__main__":
             }],
         [32, 42, 64, 84, 128, 168], 'World hello']
 
+    print()
+    print("Send another batch of data:", second_set)
+    print()
     a.process_stream(second_set)
     a.print_processors_stats()
     print()

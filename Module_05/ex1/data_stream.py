@@ -35,12 +35,15 @@ class NumericProcessor(DataProcessor):
 
         return False
 
-    def ingest(self, data: Any) -> None:
+    def ingest(
+            self,
+            data: int | float | list[int | float]
+            ) -> None:
         if not self.validate(data):
             raise TypeError("Improper numeric data")
         if isinstance(data, list):
             for item in data:
-                self.storage.append((self.rank, item))
+                self.storage.append((self.rank, str(item)))
                 self.rank += 1
                 self.total_processed += 1
 
@@ -48,9 +51,6 @@ class NumericProcessor(DataProcessor):
             self.storage.append((self.rank, str(data)))
             self.rank += 1
             self.total_processed += 1
-
-    def output(self) -> tuple:
-        return super().output()
 
 
 class TextProcessor(DataProcessor):
@@ -66,7 +66,10 @@ class TextProcessor(DataProcessor):
 
         return False
 
-    def ingest(self, data: Any) -> None:
+    def ingest(
+            self,
+            data: str | list[str]
+            ) -> None:
         if not self.validate(data):
             raise TypeError("Improper data")
         if (isinstance(data, list)):
@@ -79,9 +82,6 @@ class TextProcessor(DataProcessor):
             self.storage.append((self.rank, str(data)))
             self.rank += 1
             self.total_processed += 1
-
-    def output(self) -> tuple:
-        return super().output()
 
 
 class LogProcessor(DataProcessor):
@@ -100,21 +100,30 @@ class LogProcessor(DataProcessor):
 
         return False
 
-    def ingest(self, data: Any) -> None:
+    def ingest(
+            self,
+            data: dict[str, str] | list[dict[str, str]]
+            ) -> None:
         if not self.validate(data):
             raise TypeError("Improper data")
         if isinstance(data, list):
             for item in data:
-                self.storage.append((self.rank, item))
+                formatted = (
+                    f"{item['log_level']}: "
+                    f"{item['log_message']}"
+                    )
+                self.storage.append((self.rank, formatted))
                 self.rank += 1
                 self.total_processed += 1
 
         else:
-            self.storage.append((self.rank, data))
+            formatted = (
+                f"{data['log_level']}: "
+                f"{data['log_message']}"
+                )
+            self.storage.append((self.rank, formatted))
             self.rank += 1
-
-    def output(self) -> tuple:
-        return super().output()
+            self.total_processed += 1
 
 
 class DataStream:
