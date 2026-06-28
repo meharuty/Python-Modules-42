@@ -1,8 +1,8 @@
-def strenght_potion() -> str:
+def strength_potion() -> str:
     from elements import create_fire, create_water
     return (
-        f"Strength potion brewed with and \
-        '{create_fire()}' and '{create_water()}'"
+        f"Strength potion brewed with and "
+        f"'{create_fire()}' and '{create_water()}'"
         )
 
 
