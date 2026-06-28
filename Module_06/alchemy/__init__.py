@@ -1,4 +1,6 @@
 from alchemy.elements import create_air
-from alchemy.potions import healing_potion as heal, strength_potion
+from .potions import healing_potion as heal
+from .potions import strength_potion
 from alchemy import transmutation
-from alchemy import grimoire
+
+all = [create_air, heal, strength_potion, transmutation]

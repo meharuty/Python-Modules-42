@@ -1,10 +1,10 @@
-from . import dark_spellbook
+from .dark_spellbook import dark_spell_allowed_ingredients
 
 
 def validate_ingredients(ingredients: str) -> str:
     lst = ingredients.split(",")
 
-    l1 = dark_spellbook.dark_spell_allowed_ingredients()
+    l1 = dark_spell_allowed_ingredients()
     t = False
     for i in lst:
         if i in l1:
