@@ -15,32 +15,32 @@ class Creature(ABC):
 
 
 class Flameling(Creature):
-    def __init__(self, name, typee):
-        super().__init__(name, typee)
+    def __init__(self) -> None:
+        super().__init__("Flameling", "Fire")
 
     def attack(self) -> str:
-        return ("Ember")
+        return ("Flameling uses Ember!")
 
 
-class Pyradon(Creature):
-    def __init__(self, name, typee):
-        super().__init__(name, typee)
+class Pyrodon(Creature):
+    def __init__(self) -> None:
+        super().__init__("Pyrodon", "Fire/Flying")
 
     def attack(self) -> str:
-        return ("Flamethrower")
+        return ("Pyrodon uses Flamethrower!")
 
 
 class Aquabub(Creature):
-    def __init__(self, name, typee):
-        super().__init__(name, typee)
+    def __init__(self) -> None:
+        super().__init__("Aquabub", "Water")
 
     def attack(self) -> str:
-        return ("Water Gun")
+        return ("Aquabub uses Water Gun!")
 
 
 class Torragon(Creature):
-    def __init__(self, name, typee):
-        super().__init__(name, typee)
+    def __init__(self) -> None:
+        super().__init__("Torragon", "Water")
 
     def attack(self) -> str:
-        return ("Hydro Pump")
+        return ("Torragon uses Hydro Pump!")

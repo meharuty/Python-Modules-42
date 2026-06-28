@@ -1,11 +1,12 @@
 from abc import ABC, abstractmethod
+from .creature import Creature
 
 
 class CreatureFactory(ABC):
     @abstractmethod
-    def create_base() -> None:
+    def create_base(self) -> Creature:
         pass
 
     @abstractmethod
-    def create_evolved() -> None:
+    def create_evolved(self) -> Creature:
         pass
