@@ -9,4 +9,4 @@ def light_spell_record(spell_name: str, ingredients: str) -> str:
     if "VALID" in validation_status:
         return f"Spell recorded: {spell_name} ({validation_status})"
     else:
-        return f"Spell recorded: {spell_name} ({validation_status})"
+        return f"Spell rejected: {spell_name} ({validation_status})"

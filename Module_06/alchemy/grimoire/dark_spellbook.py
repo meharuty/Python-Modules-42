@@ -9,6 +9,6 @@ def dark_spell_record(spell_name: str, ingredients: str) -> str:
     validation_status = validate_ingredients(ingredients)
 
     if "VALID" in validation_status:
-        return f"Spell '{spell_name}' successfully recorded."
+        return f"Spell recorded: {spell_name} ({validation_status})"
     else:
-        return f"Spell '{spell_name}' rejected: Contains forbidden."
+        return f"Spell rejected: {spell_name} ({validation_status})"

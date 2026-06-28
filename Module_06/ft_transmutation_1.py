@@ -1,6 +1,6 @@
-from alchemy import transmutation
+import alchemy.transmutation
 
 print("=== Transmutation 1 ===")
 print("Import transmutation module directly")
-res = transmutation.recipes.lead_to_gold()
+res = alchemy.transmutation.recipes.lead_to_gold()
 print("Testing lead to gold:", res)
