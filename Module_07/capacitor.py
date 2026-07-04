@@ -42,8 +42,10 @@ def test_transform(
     print(evolved.revert())
 
 
-healing_factory = HealingCreatureFactory()
-transform_factory = TransformCreatureFactory()
+if __name__ == "__main__":
 
-test_healing(healing_factory)
-test_transform(transform_factory)
+    healing_factory = HealingCreatureFactory()
+    transform_factory = TransformCreatureFactory()
+
+    test_healing(healing_factory)
+    test_transform(transform_factory)
