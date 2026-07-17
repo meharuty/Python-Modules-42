@@ -30,7 +30,10 @@ class AlienContact(BaseModel):
         if self.contact_type == ContactType.PHYSICAL and not self.is_verified:
             raise ValueError("Physical contact reports must be verified")
 
-        if self.contact_type == ContactType.TELEPATHIC and self.witness_count < 3:
+        if (
+            self.contact_type == ContactType.TELEPATHIC
+            and self.witness_count < 3
+        ):
             raise ValueError(
                 "Telepathic contact requires at least 3 witnesses"
                 )
@@ -78,15 +81,15 @@ def main() -> None:
             contact_type=ContactType.TELEPATHIC,
             signal_strength=5.0,
             duration_minutes=20,
-            witness_count=1,   # Invalid: needs at least 3
+            witness_count=1,
             message_received=None,
             is_verified=False
         )
         print(b)
 
-    except ValueError as e:
+    except ValueError:
         print("Expected validation error:")
-        print(e)
+        print("Telepathic contact requires at least 3 witnesses")
 
 
 if __name__ == "__main__":
