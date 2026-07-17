@@ -11,7 +11,7 @@ PACKAGES = {
     "pandas": "Data manipulation",
     "numpy": "Numerical computation",
     "matplotlib": "Visualization",
-    "requests": "Network access (optional)"
+    "requests": "Network access"
 }
 
 
@@ -41,10 +41,10 @@ def show_installation_help() -> None:
     print("\nSome required packages are missing.\n")
 
     print("Install using pip:")
-    print("    pip install -r requirements.txt\n")
+    print("pip install -r requirements.txt\n")
 
     print("Or install using Poetry:")
-    print("    poetry install\n")
+    print("poetry install\n")
 
     print("Run again after installing the dependencies.")
 
@@ -53,11 +53,11 @@ def compare_dependency_managers() -> None:
     print("\nDependency management")
     print("---------------------")
     print("pip:")
-    print("  pip install -r requirements.txt")
+    print("pip install -r requirements.txt")
     print()
     print("Poetry:")
-    print("  poetry install")
-    print("  poetry run python loading.py")
+    print("poetry install")
+    print("poetry run python loading.py")
     print()
 
 

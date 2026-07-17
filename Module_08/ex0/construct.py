@@ -4,7 +4,6 @@ import os
 
 
 def is_in_venv() -> bool:
-    """Whether we are in virtual env or not"""
     if sys.prefix != sys.base_prefix:
         return True
     else:
@@ -12,7 +11,6 @@ def is_in_venv() -> bool:
 
 
 def main() -> None:
-    """Display information about the current Python environment."""
     in_venv = is_in_venv()
 
     if in_venv:

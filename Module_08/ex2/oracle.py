@@ -1,10 +1,5 @@
 import os
-try:
-    from dotenv import load_dotenv   # type: ignore
-except ModuleNotFoundError:
-    def load_dotenv() -> None:
-        pass
-
+from dotenv import load_dotenv
 
 load_dotenv()
 
