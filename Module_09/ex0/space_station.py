@@ -1,5 +1,6 @@
 from typing import Optional
 from pydantic import BaseModel, Field
+from pydantic import ValidationError
 from datetime import datetime
 
 
@@ -27,14 +28,12 @@ def main() -> None:
                     )
     print("Valid station created:")
     print(f"""
-ID:                 {a.station_id}
-Name:               {a.name}
-Crew Size:          {a.crew_size}
-Power Level:        {a.power_level:.1f}%
-Oxygen Level:       {a.oxygen_level:.1f}%
-Operational:        {a.is_operational}
-Last Maintenance:   {a.last_maintenance:%Y-%m-%d %H:%M}
-Notes:              {a.notes or 'None'}
+    ID: {a.station_id}
+    Name: {a.name}
+    Crew Size: {a.crew_size}
+    Power Level: {a.power_level}%
+    Oxygen Level: {a.oxygen_level}%
+    Last Maintenance: {a.last_maintenance:%Y-%m-%d %H:%M}
 """)
     try:
         b = SpaceStation(
@@ -46,11 +45,8 @@ Notes:              {a.notes or 'None'}
                     last_maintenance=datetime.now(),
                     )
         print(b)
-    except ValueError:
-        print(
-            "Expected validation error:\n"
-            "Input should be less than or equal to 20"
-            )
+    except ValidationError as e:
+        print("Expected validation error:\n", e)
 
 
 if __name__ == "__main__":

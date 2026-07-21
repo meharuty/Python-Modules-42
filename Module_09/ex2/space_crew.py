@@ -4,7 +4,7 @@ from pydantic import BaseModel, Field, model_validator
 from datetime import datetime
 
 
-class CrewRanks(str, Enum):
+class Rank(str, Enum):
     CADET = "cadet"
     OFFICER = "officer"
     LIEUTENANT = "lieutenant"
@@ -15,11 +15,11 @@ class CrewRanks(str, Enum):
 class CrewMember(BaseModel):
     member_id: str = Field(min_length=3, max_length=10)
     name: str = Field(min_length=2, max_length=50)
-    rank: CrewRanks
+    rank: Rank
     age: int = Field(ge=18, le=80)
     specialization: str = Field(min_length=3, max_length=30)
     years_experience: int = Field(ge=0, le=50)
-    is_active: bool = True
+    is_active: bool = Field(default=True)
 
 
 class SpaceMission(BaseModel):
@@ -33,12 +33,12 @@ class SpaceMission(BaseModel):
     budget_millions: float = Field(ge=1, le=10000)
 
     @model_validator(mode='after')
-    def validate_space_mission(self):
+    def validate_space_mission(self) -> "SpaceMission":
         if not self.mission_id.startswith("M"):
             raise ValueError("Mission ID must start with 'M'")
 
         if not any(
-            member.rank in (CrewRanks.CAPTAIN, CrewRanks.COMMANDER)
+            member.rank in (Rank.CAPTAIN, Rank.COMMANDER)
             for member in self.crew
         ):
             raise ValueError(
@@ -61,7 +61,7 @@ class SpaceMission(BaseModel):
         return self
 
 
-def main():
+def main() -> None:
     print("Space Mission Crew Validation")
     print("=========================================")
     try:
@@ -75,7 +75,7 @@ def main():
                 CrewMember(
                     member_id="C001",
                     name="John Smith",
-                    rank=CrewRanks.COMMANDER,
+                    rank=Rank.COMMANDER,
                     age=45,
                     specialization="Pilot",
                     years_experience=15,
@@ -84,7 +84,7 @@ def main():
                 CrewMember(
                     member_id="C002",
                     name="Jane Doe",
-                    rank=CrewRanks.CAPTAIN,
+                    rank=Rank.CAPTAIN,
                     age=38,
                     specialization="Engineer",
                     years_experience=10,
@@ -93,7 +93,7 @@ def main():
                 CrewMember(
                     member_id="C003",
                     name="Bob Lee",
-                    rank=CrewRanks.OFFICER,
+                    rank=Rank.OFFICER,
                     age=30,
                     specialization="Medic",
                     years_experience=2,
@@ -102,7 +102,7 @@ def main():
                 CrewMember(
                     member_id="C004",
                     name="Alice Kim",
-                    rank=CrewRanks.CADET,
+                    rank=Rank.CADET,
                     age=24,
                     specialization="Scientist",
                     years_experience=1,
@@ -111,11 +111,18 @@ def main():
             ],
             budget_millions=500.0,
         )
-        print(valid_mission)
+        print("Valid mission created:")
+        print(f"""Mission: {valid_mission.mission_name}
+                ID: {valid_mission.mission_id}
+                Destination: {valid_mission.destination}
+                Duration: {valid_mission.duration_days} days
+                Budget: ${valid_mission.budget_millions}M
+                Crew size: {len(valid_mission.crew)}
+              """)
     except ValidationError as e:
         print(e)
 
-    print("\n=== Invalid Mission ===")
+    print("===============================")
     try:
         invalid_mission = SpaceMission(
             mission_id="X1001",
@@ -127,7 +134,7 @@ def main():
                 CrewMember(
                     member_id="C005",
                     name="Tom",
-                    rank=CrewRanks.OFFICER,
+                    rank=Rank.OFFICER,
                     age=28,
                     specialization="Pilot",
                     years_experience=3,
@@ -138,6 +145,7 @@ def main():
         )
         print(invalid_mission)
     except ValidationError as e:
+        print("Expected validation error:")
         print(e)
 
 

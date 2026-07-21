@@ -1,5 +1,6 @@
 from enum import Enum
 from pydantic import BaseModel, Field, model_validator
+from pydantic import ValidationError
 from datetime import datetime
 from typing import Optional
 
@@ -20,10 +21,10 @@ class AlienContact(BaseModel):
     duration_minutes: int = Field(ge=1, le=1440)
     witness_count: int = Field(ge=1, le=100)
     message_received: Optional[str] = Field(default=None, max_length=500)
-    is_verified: bool = False
+    is_verified: bool = Field(default=False)
 
     @model_validator(mode="after")
-    def validate_business_rules(self):
+    def validate_business_rules(self) -> "AlienContact":
         if not self.contact_id.startswith("AC"):
             raise ValueError("Contact ID must start with 'AC'")
 
@@ -69,7 +70,7 @@ def main() -> None:
         print(f"Duration: {contact.duration_minutes} minutes")
         print(f"Witnesses: {contact.witness_count}")
         print(f"Message: '{contact.message_received}'")
-    except ValueError as e:
+    except ValidationError as e:
         print("Validation error:", e)
 
     print("======================================")
@@ -86,10 +87,9 @@ def main() -> None:
             is_verified=False
         )
         print(b)
-
-    except ValueError:
+    except ValidationError as e:
         print("Expected validation error:")
-        print("Telepathic contact requires at least 3 witnesses")
+        print(e)
 
 
 if __name__ == "__main__":
