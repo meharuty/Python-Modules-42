@@ -21,7 +21,7 @@ def power_validator(min_power: int) -> Callable:
             if "power" in kwargs:
                 power = kwargs["power"]
             else:
-                power = args[-1]  # last positional argument
+                power = args[-1]
             if power < min_power:
                 return "Insufficient power for this spell"
             return func(*args, **kwargs)
