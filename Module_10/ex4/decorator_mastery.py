@@ -17,10 +17,15 @@ def spell_timer(func: Callable) -> Callable:
 def power_validator(min_power: int) -> Callable:
     def decorator(func: Callable) -> Callable:
         @wraps(func)
-        def wrapper(power: int) -> Any:
+        def wrapper(*args, **kwargs) -> Any:
+            # Get the power argument
+            if "power" in kwargs:
+                power = kwargs["power"]
+            else:
+                power = args[-1]  # last positional argument
             if power < min_power:
                 return "Insufficient power for this spell"
-            return func(power)
+            return func(*args, **kwargs)
         return wrapper
     return decorator
 
@@ -46,6 +51,19 @@ def retry_spell(max_attempts: int) -> Callable:
             return f"Spell casting failed after {max_attempts} attempts"
         return wrapper
     return decorator
+
+
+class MageGuild:
+    @staticmethod
+    def validate_mage_name(name: str) -> bool:
+        if (len(name) > 2 and
+                all(char.isalpha() or char.isspace() for char in name)):
+            return True
+        return False
+
+    @power_validator(10)
+    def cast_spell(self, spell_name: str, power: int) -> str:
+        return f"Successfully cast {spell_name} with {power} power"
 
 
 def main() -> None:
@@ -74,6 +92,12 @@ def main() -> None:
 
     print(unstable_spell())
     print()
+
+    obj = MageGuild()
+    print(obj.validate_mage_name("ab"))
+    print(obj.validate_mage_name("abc"))
+    print(obj.cast_spell('fireball', 15))
+    print(obj.cast_spell('fireball', 8))
 
 
 if __name__ == "__main__":
