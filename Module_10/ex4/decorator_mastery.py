@@ -18,7 +18,6 @@ def power_validator(min_power: int) -> Callable:
     def decorator(func: Callable) -> Callable:
         @wraps(func)
         def wrapper(*args, **kwargs) -> Any:
-            # Get the power argument
             if "power" in kwargs:
                 power = kwargs["power"]
             else:
