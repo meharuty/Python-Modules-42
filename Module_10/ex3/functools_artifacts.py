@@ -60,19 +60,28 @@ def spell_dispatcher() -> Callable[[Any], str]:
 
 def main() -> None:
     lst1 = [1, 2, 3, 4, 5, 6]
+    print("Testing spell reducer...")
     r1 = spell_reducer(lst1, "min")
     print(r1)
+    print()
 
     def func2(power: int, element: str, target: str) -> str:
         return (f"The power of {element} for hitting {target} is {power}")
 
+    print("Testing partial enhanter...")
     d2 = partial_enchanter(func2)
     print(d2["earth_enchant"]("sword"))
     print(d2["water_enchant"]("sword"))
     print(d2["fire_enchant"]("sword"))
+    print()
 
-    print(memoized_fibonacci(7))
+    print("Testing memoized fibonacci...")
+    print("Fib(10):", memoized_fibonacci(10))
+    print("Fib(15):", memoized_fibonacci(15))
+    print("Fib(1):", memoized_fibonacci(1))
+    print()
 
+    print("Testing spell dispatcher...")
     r4 = spell_dispatcher()
     print(r4(42))
     print(r4("fireball"))

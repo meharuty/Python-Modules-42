@@ -38,14 +38,19 @@ def main() -> None:
     def sp2(target: str, word: str) -> str:
         return (f"{word} {target}")
 
+    print("Testing spell combiner...")
     r1 = spell_combiner(spell1=sp1, spell2=sp2)
-    print(r1("Heals", "Dragon"))
+    print("Combined spell result:", r1("Heals", "Dragon"))
+    print()
 
     def fireball(target: str, power: int) -> str:
         return f"{target} has {power} power"
 
+    print("Testing power amplifier...")
     r2 = power_amplifier(fireball, 3)
-    print(r2("Fireball", 10))
+    print("Original:", fireball("Fireball", 10))
+    print("Amplified", r2("Fireball", 10))
+    print()
 
     def cond(target: str, power: int) -> bool:
         if power >= 30 and target == 'Fireball':
@@ -55,13 +60,16 @@ def main() -> None:
     def sp3(target: str, power: int) -> str:
         return (f"{target} has power {power}")
 
+    print("Testing conditional caster...")
     r3 = conditional_caster(condition=cond, spell=sp3)
 
     print(r3("Fireball", 10))
     print(r3("Fireball", 40))
+    print()
 
     ls = [sp1, sp2]
 
+    print("Testing spell sequence...")
     r4 = spell_sequence(ls)
     print(r4('Dragon', 15))
 

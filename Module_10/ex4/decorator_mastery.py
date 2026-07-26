@@ -66,17 +66,23 @@ class MageGuild:
 
 
 def main() -> None:
+    print("Testing spell timer...")
+
     @spell_timer
     def fireball() -> str:
         return "Fireball cast!"
     print(fireball())
+    print()
+
+    print("Testing power validator...")
 
     @power_validator(10)
     def func2(power: int) -> int:
         return power * power
     print(func2(15))
-
+    print()
     attempts = 0
+    print("Testing retrying spell...")
 
     @retry_spell(3)
     def unstable_spell() -> str:
@@ -92,6 +98,7 @@ def main() -> None:
     print(unstable_spell())
     print()
 
+    print("Testing MageGuild...")
     obj = MageGuild()
     print(obj.validate_mage_name("ab"))
     print(obj.validate_mage_name("abc"))

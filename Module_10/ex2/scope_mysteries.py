@@ -49,23 +49,32 @@ def memory_vault() -> dict[str, Callable]:
 def main() -> None:
     r1 = mage_counter()
     r2 = mage_counter()
+
+    print("Testing mage counter...")
     for i in range(2):
         res1 = r1()
-    print(res1)
+        print(f"Counter_a call {i+1}:", res1)
 
     for i in range(4):
         res2 = r2()
-    print(res2)
+        print(f"Counter_b call {i+1}:", res2)
+    print()
 
+    print("Testing spell accumulator...")
+    print("Base 10, add 20x3:")
     r3 = spell_accumulator(10)
     for i in range(10):
         res3 = r3(i)
     print(res3)
+    print()
 
+    print("Testing enchantment factory...")
     r4 = enchantment_factory("Flameling")
     res4 = r4("Sword")
     print(res4)
+    print()
 
+    print("Testing memory vault...")
     r5 = memory_vault()
     r5["store"]("weapon", "Sword")
     r5["store"]("spell", "Fireball")

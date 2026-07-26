@@ -88,15 +88,19 @@ def main() -> None:
         "Teleport",
     ]
 
+    print("Testing artifact sorter...")
     print(artifact_sorter(artifacts=a))
     print()
 
+    print("Testing power filter...")
     print(power_filter(mages=m, min_power=80))
     print()
 
+    print("Testing spell transformer...")
     print(spell_transformer(s))
     print()
 
+    print("Statistics...")
     print(mage_stats(m))
 
 
